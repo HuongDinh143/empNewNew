@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Department</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        form{
+            margin: 5%;
+        }
+        a{
+            margin-top: 30px;
+        }
+        h2 {
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<h2>Update Department</h2>
+<div></div>
+<form th:action="@{/departmentController/update}" method="post" th:object="${department}">
+    <div class="mb-3">
+        <label for="deptId" class="form-label">Department Id</label>
+        <input type="text" class="form-control" id="deptId" name="deptId" th:value="${department.deptId}" readonly>
+    </div>
+    <div class="mb-3">
+        <label for="deptName" class="form-label">Department Name</label>
+        <input type="text" class="form-control" id="deptName" name="deptName" th:value="${department.deptName}">
+    </div>
+    <div class="mb-3">
+        <label for="deptDesc" class="form-label">Department Description</label>
+        <input type="text" class="form-control" id="deptDesc" name="deptDesc" th:value="${department.deptDesc}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Department Status</label><br>
+
+        <input type="radio" id="action" name="deptStatus" value="true"
+               th:checked="${department.deptStatus == true}">
+        <label for="action">Action</label><br>
+
+        <input type="radio" id="inAction" name="deptStatus" value="false"
+               th:checked="${department.deptStatus == false}">
+        <label for="inAction">Inaction</label><br>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <br> <br>
+    <a class="btn btn-info" href="/departmentController/findAll">List Department</a>
+</form>
+
+</body>
+</html>

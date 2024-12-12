@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Employee</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        form {
+            margin: 5%;
+        }
+
+        a {
+            margin-top: 30px;
+        }
+
+        h2 {
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<h2>Update Employee</h2>
+<form th:action="@{/employeeController/update}" method="post" th:object="${employee}">
+    <div class="mb-3">
+        <label for="empId" class="form-label">Employee Id</label>
+        <input type="text" class="form-control" id="empId" name="empId" th:value="${employee.empId}" readonly>
+
+    </div>
+    <div class="mb-3">
+        <label for="empName" class="form-label">Employee Name</label>
+        <input type="text" class="form-control" id="empName" name="empName" th:field="*{empName}">
+        <p th:if="${#fields.hasErrors('empName')}" class="text-danger" th:text="${#fields.errors('empName')}"></p>
+    </div>
+    <div class="mb-3">
+        <label for="empBirthOfDate" class="form-label">Employee Birth</label>
+        <input type="date" class="form-control" id="empBirthOfDate" name="empBirthOfDate" th:field="*{empBirthOfDate}">
+        <p th:if="${#fields.hasErrors('empBirthOfDate')}" class="text-danger"
+           th:text="${#fields.errors('empBirthOfDate')}"></p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Employee Sex</label>
+        <input type="radio" id="male" name="empSex" th:value="true" th:checked="${employee.empSex == true}">
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="empSex" th:value="false" th:checked="${employee.empSex == false}">
+        <label for="female">Female</label>
+    </div>
+    <div class="mb-3">
+        <label for="empAddress" class="form-label">Employee Address</label>
+        <input type="text" class="form-control" id="empAddress" name="empAddress" th:field="*{empAddress}">
+        <p th:if="${#fields.hasErrors('empAddress')}" class="text-danger" th:text="${#fields.errors('empAddress')}"></p>
+    </div>
+    <div class="mb-3">
+        <label for="empEmail" class="form-label">Employee Email</label>
+        <input type="text" class="form-control" id="empEmail" name="empEmail" th:field="*{empEmail}">
+        <p th:if="${#fields.hasErrors('empEmail')}" class="text-danger" th:text="${#fields.errors('empEmail')}"></p>
+    </div>
+    <div class="mb-3">
+        <label for="empPhone" class="form-label">Employee Phone</label>
+        <input type="text" class="form-control" id="empPhone" name="empPhone" th:field="*{empPhone}">
+        <p th:if="${#fields.hasErrors('empPhone')}" class="text-danger" th:text="${#fields.errors('empPhone')}"></p>
+    </div>
+    <div class="mb-3">
+        <label for="avatar" class="form-label">Employee Avatar</label>
+        <input type="text" class="form-control" id="avatar" name="avatar" th:field="*{empAvatar}">
+        <p th:if="${#fields.hasErrors('empAvatar')}" class="text-danger" th:text="${#fields.errors('empAvatar')}"></p>
+    </div>
+    <div class="mb-3">
+        <label for="deptId" class="form-label">Department</label>
+        <select id="deptId" name="deptId" class="form-select" th:value="${department.deptId}">
+            <option th:value="${department.deptId}" th:text="${department.deptName}"></option>
+            <option th:each="dept : ${listDepartments}"
+                    th:value="${dept.deptId}"
+                    th:text="${dept.deptName}">
+            </option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Employee Status</label>
+        <input type="radio" id="active" name="empStatus" th:value="true" th:checked="${employee.empStatus == true}">
+        <label for="active">Active</label>
+        <input type="radio" id="inActive" name="empStatus" th:value="false" th:checked="${employee.empStatus == false}">
+        <label for="inActive">Inactive</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+</body>
+</html>

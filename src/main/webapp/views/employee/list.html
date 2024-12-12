@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Employee</title>
+</head>
+<body>
+<h3>Danh sách nhân viên</h3>
+<input type="text" id="searchValue" placeholder="Enter employee name or email"/>
+<input type="submit" value="Search" id="search"/><br><br>
+<a class="btn btn-info" href="/employeeController/findAll">List Employee</a>
+
+<div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+<div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#No</th>
+        <th scope="col">Employee Id</th>
+        <th scope="col">Employee Name</th>
+        <th scope="col">Employee Birth</th>
+        <th scope="col">Employee Sex</th>
+        <th scope="col">Employee Address</th>
+        <th scope="col">Employee Email</th>
+        <th scope="col">Employee Phone</th>
+        <th scope="col">Department Name</th>
+        <th scope="col">Avatar</th>
+        <th scope="col" colspan="2">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="emp,loop : ${listEmployees}">
+        <th scope="row" th:text="${loop.count}">1</th>
+        <td th:text="${emp.empId}"></td>
+        <td th:text="${emp.empName}"></td>
+        <td th:text="${emp.empBirthOfDate}"></td>
+        <td th:text="${emp.empSex}"></td>
+        <td th:text="${emp.empAddress}"></td>
+        <td th:text="${emp.empEmail}"></td>
+        <td th:text="${emp.empPhone}"></td>
+        <td th:text="${emp.department.deptName}"></td>
+        <td><img th:src="${emp.empAvatar}" width="100" height="100" style="object-fit: cover" alt="#"></td>
+
+        <td> <a class="btn btn-warning" th:href="@{/employeeController/initUpdate(empId=${emp.empId})}">Update</a> </td>
+        <td>
+            <a class="btn btn-danger" th:href="@{/employeeController/delete(empId=${emp.empId})}" onclick="return confirm('Are you sure?');">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a class="btn btn-primary" href="/employeeController/initCreate">Thêm Nhân viên</a>
+
+<script>
+    const searchButton = document.getElementById("search");
+    const searchInput = document.getElementById("searchValue");
+
+    function performSearch() {
+        const searchValue = searchInput.value.trim();
+
+        if (searchValue === "") {
+            alert("Vui lòng nhập từ khóa tìm kiếm");
+            return;
+        }
+
+
+        window.location.href = `/employeeController/findEmployee?searchValue=${encodeURIComponent(searchValue)}`;
+    }
+
+    searchButton.addEventListener("click", performSearch);
+
+    searchInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            performSearch();
+        }
+    });
+</script>
+
+</body>
+</html>
